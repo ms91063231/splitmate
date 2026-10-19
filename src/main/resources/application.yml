@@ -1,0 +1,32 @@
+server:
+  port: ${PORT:8080}
+  forward-headers-strategy: native
+  servlet:
+    session:
+      timeout: 7d
+      cookie:
+        name: SPLITMATE_SESSION
+        http-only: true
+        secure: ${COOKIE_SECURE:true}
+        same-site: lax
+spring:
+  datasource:
+    url: jdbc:mysql://${MYSQLHOST:localhost}:${MYSQLPORT:3306}/${MYSQLDATABASE:railway}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: ${MYSQLUSER:root}
+    password: ${MYSQLPASSWORD:root}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
